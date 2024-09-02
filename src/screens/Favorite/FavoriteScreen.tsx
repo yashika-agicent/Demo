@@ -62,12 +62,13 @@ export default function FavoriteScreen({ navigation }) {
           shadowOpacity: 0.8,
           shadowRadius: 1,
           elevation: 5,
-          height: scale(220),
-          width: "95%",
+          height: scale(210),
+          width: "92%",
           backgroundColor: COLORS.WHITE,
           borderRadius: scale(10),
           margin: scale(5),
           flexDirection: "row",
+          alignSelf: "center",
         }}
       >
         <Image
@@ -76,11 +77,11 @@ export default function FavoriteScreen({ navigation }) {
             height: scale(150),
             width: scale(100),
             marginTop: scale(5),
-            borderRadius: scale(10),
+            borderRadius: scale(20),
             marginHorizontal: scale(8),
           }}
         />
-        <View style={{}}>
+        <View style={{ width: scale(200) }}>
           <DemoText
             color={COLORS.TEXT_BOLD}
             size={DemoTextSize.H1}
@@ -90,7 +91,7 @@ export default function FavoriteScreen({ navigation }) {
             The Shawshank Redemption
           </DemoText>
           <DemoText
-            color={COLORS.TEXT_PLACEHOLDER}
+            color={COLORS.T1}
             size={DemoTextSize.BSmall}
             fontWeight={DemoTextFontWeight.SemiBold}
             style={{ marginLeft: scale(10) }}
@@ -98,14 +99,26 @@ export default function FavoriteScreen({ navigation }) {
             Drama, Crime | 1994
           </DemoText>
           <DemoText
-            color={COLORS.TEXT_PLACEHOLDER}
+            color={COLORS.TEXT_BOLD}
             size={DemoTextSize.BSmall}
-            fontWeight={DemoTextFontWeight.Regular}
-            style={{ marginLeft: scale(10) }}
+            fontWeight={DemoTextFontWeight.SemiBold}
+            style={{ marginLeft: scale(10), marginTop: scale(5) }}
           >
             Two imprisomned men bond over a number of years, finding solace and
             eventual redemption thorugh actos of common decency.
           </DemoText>
+          <View style={{ marginTop: scale(8) }}>
+            <DemoButton
+              label="View Details"
+              labelSize={DemoTextSize.BSmall}
+              onPress={onBack}
+              containerStyle={{
+                height: scale(25),
+                backgroundColor: COLORS.PRIMARY,
+                borderRadius: scale(12),
+              }}
+            />
+          </View>
         </View>
       </View>
     </View>

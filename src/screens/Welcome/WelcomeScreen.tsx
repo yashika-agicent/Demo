@@ -1,7 +1,7 @@
 // screens/WelcomeScreen.js
 
 import React from "react";
-import { View, Text, Button, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import DemoText, {
   DemoTextFontWeight,
   DemoTextSize,

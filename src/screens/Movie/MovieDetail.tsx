@@ -8,8 +8,37 @@ import DemoText, {
 import COLORS from "../../theme/Color";
 import DemoLine from "../../components/CustomLine/DemoLine";
 import DemoButton from "../../components/CustomButton/DemoButton";
+import { BASE_URL } from "../../api/Api";
 
-export default function MovieDetail() {
+export default function MovieDetail({ navigation, route }) {
+  const { movieData } = route.params;
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    // Array of month names
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    // Extract the month, day, and year
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    // Format the date as "Month, Day Year"
+    return `${month} ${day}, ${year}`;
+  };
   return (
     <View style={styles.container}>
       <View
@@ -46,7 +75,7 @@ export default function MovieDetail() {
         }}
       >
         <Image
-          source={ImagePaths.DUMMYMOVIEIMG}
+          source={{ uri: `${BASE_URL}${movieData?.large_cover_image}` }}
           style={{
             height: scale(220),
             width: scale(160),
@@ -62,7 +91,7 @@ export default function MovieDetail() {
           fontWeight={DemoTextFontWeight.Bold}
           style={{ textAlign: "center", marginTop: scale(25) }}
         >
-          The Matrix
+          {movieData.title}
         </DemoText>
 
         <DemoText
@@ -74,8 +103,7 @@ export default function MovieDetail() {
             lineHeight: scale(22),
           }}
         >
-          A computer hacker learns from mysterious rebels about the true nature
-          of his reality and his role in the war against its controllers.
+          {movieData.description_full}
         </DemoText>
 
         <View
@@ -99,7 +127,7 @@ export default function MovieDetail() {
             fontWeight={DemoTextFontWeight.Medium}
             style={{}}
           >
-            March 31, 1999
+            {formatDate(movieData.date_uploaded)}
           </DemoText>
         </View>
         <View
@@ -123,7 +151,7 @@ export default function MovieDetail() {
             fontWeight={DemoTextFontWeight.Medium}
             style={{}}
           >
-            Action, Sci-Fi
+            {movieData.genres.join(", ")}
           </DemoText>
         </View>
 

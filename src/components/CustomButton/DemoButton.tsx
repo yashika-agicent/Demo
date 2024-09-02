@@ -35,6 +35,7 @@ const DemoButton = ({
   isDisabled,
   isLoading,
   labelSize = DemoTextSize.H3,
+  disabled = false,
 }: Props) => {
   return (
     <TouchableOpacity
@@ -44,6 +45,7 @@ const DemoButton = ({
         { backgroundColor: isDisabled ? "red" : color },
         containerStyle,
       ]}
+      disabled={disabled}
     >
       {isLoading && <ActivityIndicator color={COLORS.WHITE} />}
       {leftIcon}

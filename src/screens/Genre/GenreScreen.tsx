@@ -43,10 +43,12 @@ export default function GenreScreen({ navigation }) {
         containerStyle={{
           width: "90%",
           height: scale(45),
-          marginTop: scale(180),
+          marginTop: "36%",
           marginBottom: scale(8),
-          backgroundColor: COLORS.PRIMARY,
+          backgroundColor:
+            selectedGenres.length === 0 ? COLORS.BORDER_COLOR : COLORS.PRIMARY,
         }}
+        disabled={selectedGenres.length === 0 ? true : false}
       />
     </View>
   );
