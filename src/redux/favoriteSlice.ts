@@ -1,4 +1,3 @@
-// store/favoritesSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const favoritesSlice = createSlice({
@@ -7,17 +6,21 @@ const favoritesSlice = createSlice({
     movies: [],
   },
   reducers: {
-    addFavorite: (state, action) => {
+    addToFavorite: (state, action) => {
       state.movies.push(action.payload);
     },
-    removeFavorite: (state, action) => {
+    removeFromFavorite: (state, action) => {
       state.movies = state.movies.filter(
         (movie) => movie.id !== action.payload.id
       );
     },
+    deleteAllFavorite: (state) => {
+      state.movies = [];
+    },
   },
 });
 
-export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+export const { addToFavorite, removeFromFavorite, deleteAllFavorite } =
+  favoritesSlice.actions;
 
 export default favoritesSlice.reducer;

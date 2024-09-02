@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   TextInput,
+  Platform,
 } from "react-native";
 import { ImagePaths } from "../../utils/ImagePaths";
 import { scale } from "../../theme/Dimension";
@@ -19,13 +20,15 @@ import DemoText, {
   DemoTextSize,
 } from "../../components/CustomText/DemoText";
 import DemoLine from "../../components/CustomLine/DemoLine";
-import movieData from "./movie.json";
-import { useNavigation } from "@react-navigation/native";
 import { fetchMoviesApi } from "../../api/MovieApi";
 import { BASE_URL } from "../../api/Api";
-export default function HomeScreen() {
-  const navigation = useNavigation();
+import { useDispatch } from "react-redux";
+import { addToFavorite, deleteAllFavorite } from "../../redux/favoriteSlice";
+import { styles } from "./styles";
 
+export default function HomeScreen({ navigation, route }) {
+  const params = route.params || {};
+  const selectedGenres = Object.values(params);
   const [movieData, setMovieData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,7 +38,6 @@ export default function HomeScreen() {
   }, []);
 
   const fetchMovieList = async () => {
-    console.log("In fetch Movies");
     setIsLoading(true);
     const response = await fetchMoviesApi();
 
@@ -45,25 +47,19 @@ export default function HomeScreen() {
       alert(`${message}`);
       setIsLoading(false);
     } else {
-      console.log(
-        "🚀 ~ fetchMovieList ~ response.data.movies:",
-        response.data.data?.movies
-      );
       setMovieData(response.data.data.movies);
       setIsLoading(false);
     }
   };
 
-  const renderMovieItem = ({ item, index }) => {
-    console.log("🚀 ~ renderMovieItem ~ item:", item);
-    const navigateToMovieDetail = () => {
-      navigation.navigate("MovieDetail", { movieData: item });
-    };
-
+  const navigateToMovieDetail = (movieObject) => {
+    navigation.navigate("MovieDetail", { movieData: movieObject });
+  };
+  const renderMovieItem = ({ item }) => {
     return (
       <TouchableOpacity
         style={styles.movieItem}
-        onPress={navigateToMovieDetail}
+        onPress={() => navigateToMovieDetail(item)}
       >
         <Image
           source={{ uri: `${BASE_URL}${item?.large_cover_image}` }}
@@ -91,12 +87,17 @@ export default function HomeScreen() {
     );
   };
 
-  const filteredMovies = movieData.filter((movie) =>
-    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredMovies = movieData
+    .filter((movie) =>
+      selectedGenres.some((genre) => movie.genres.includes(genre))
+    )
+    .filter((movie) =>
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
   return (
     <View style={styles.container}>
-      <View style={{ paddingVertical: scale(10), flexDirection: "row" }}>
+      <View style={styles.headerContainer}>
         <View style={styles.header}>
           <Image
             source={ImagePaths.MOVIEVERTICALBLACK}
@@ -111,14 +112,7 @@ export default function HomeScreen() {
             My Movies
           </DemoText>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignContent: "center",
-            justifyContent: "center",
-            marginRight: scale(5),
-          }}
-        >
+        <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
             placeholder="Search..."
@@ -127,11 +121,7 @@ export default function HomeScreen() {
           />
           <Image
             source={ImagePaths.MAGNIFYINGGLASS}
-            style={{
-              alignSelf: "center",
-              margin: scale(5),
-              marginBottom: scale(25),
-            }}
+            style={styles.searchIcon}
           />
         </View>
       </View>
@@ -155,68 +145,3 @@ export default function HomeScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.WHITE,
-  },
-  loader: {
-    flex: 1,
-    backgroundColor: COLORS.WHITE,
-    justifyContent: "center",
-  },
-  header: {
-    flexDirection: "row",
-    width: scale(110),
-    marginHorizontal: scale(20),
-  },
-  headerImage: {
-    height: scale(20),
-    width: scale(20),
-    marginTop: scale(25),
-  },
-  headerText: {
-    paddingHorizontal: scale(5),
-  },
-  searchInput: {
-    height: scale(30),
-    width: scale(180),
-    borderColor: COLORS.BORDER_COLOR,
-    borderWidth: 1,
-    borderRadius: scale(5),
-    marginBottom: scale(10),
-    paddingHorizontal: scale(10),
-  },
-  listContainer: {
-    margin: 5,
-    padding: 5,
-    alignItems: "center",
-  },
-  movieItem: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
-    elevation: 5,
-    height: scale(250),
-    width: scale(150),
-    backgroundColor: COLORS.WHITE,
-    borderRadius: scale(10),
-    margin: scale(5),
-  },
-  movieImage: {
-    height: scale(190),
-    width: scale(140),
-    alignSelf: "center",
-    marginTop: scale(5),
-    borderRadius: scale(10),
-  },
-  movieTitle: {
-    padding: scale(5),
-    marginLeft: scale(5),
-  },
-  movieRating: {
-    marginLeft: scale(10),
-  },
-});

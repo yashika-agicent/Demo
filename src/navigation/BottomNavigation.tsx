@@ -6,7 +6,8 @@ import COLORS from "../theme/Color";
 
 const Tab = createBottomTabNavigator();
 
-function BottomNavigation() {
+function BottomNavigation({ route }) {
+  const { params } = route; // Get parameters from navigation
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -28,7 +29,11 @@ function BottomNavigation() {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        initialParams={params.param}
+      />
       <Tab.Screen name="Favorite" component={FavoriteScreen} />
     </Tab.Navigator>
   );

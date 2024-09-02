@@ -1,7 +1,7 @@
 // screens/GenreScreen.js
 
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import COLORS from "../../theme/Color";
 import DemoText, {
   DemoTextFontWeight,
@@ -11,56 +11,52 @@ import { scale } from "../../theme/Dimension";
 import DemoLine from "../../components/CustomLine/DemoLine";
 import GenreSelection from "./GenreSelection";
 import DemoButton from "../../components/CustomButton/DemoButton";
+import { styles } from "./styles";
 
 export default function GenreScreen({ navigation }) {
   const [selectedGenres, setSelectedGenres] = useState([]);
 
   const onNavigateToHome = () => {
-    navigation.navigate("BottomNavigation");
+    navigation.navigate("BottomNavigation", {
+      screen: "Home",
+      params: selectedGenres,
+    });
   };
+
   return (
     <View style={styles.container}>
       <DemoText
         color={COLORS.TEXT_BOLD}
         size={DemoTextSize.H2}
         fontWeight={DemoTextFontWeight.Bold}
-        style={{ textAlign: "center", paddingVertical: scale(13) }}
+        style={styles.headerText}
       >
         Select Your Favorite Genres
       </DemoText>
       <DemoLine />
 
-      <View style={{ marginTop: "70%", height: scale(180) }}>
+      <View style={styles.genreSelectionContainer}>
         <GenreSelection
           selectedGenres={selectedGenres}
           setSelectedGenres={setSelectedGenres}
         />
       </View>
+
       <DemoButton
         label="Next"
         labelSize={DemoTextSize.BPrimary}
         onPress={onNavigateToHome}
-        containerStyle={{
-          width: "90%",
-          height: scale(45),
-          marginTop: "36%",
-          marginBottom: scale(8),
-          backgroundColor:
-            selectedGenres.length === 0 ? COLORS.BORDER_COLOR : COLORS.PRIMARY,
-        }}
-        disabled={selectedGenres.length === 0 ? true : false}
+        containerStyle={[
+          styles.buttonContainer,
+          {
+            backgroundColor:
+              selectedGenres.length === 0
+                ? COLORS.BORDER_COLOR
+                : COLORS.PRIMARY,
+          },
+        ]}
+        disabled={selectedGenres.length === 0}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: COLORS.WHITE,
-  },
-  text: {
-    fontSize: 24,
-  },
-});
