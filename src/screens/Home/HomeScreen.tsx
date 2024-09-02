@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
-  Text,
-  StyleSheet,
   Image,
   FlatList,
   TouchableOpacity,
@@ -22,8 +20,6 @@ import DemoText, {
 import DemoLine from "../../components/CustomLine/DemoLine";
 import { fetchMoviesApi } from "../../api/MovieApi";
 import { BASE_URL } from "../../api/Api";
-import { useDispatch } from "react-redux";
-import { addToFavorite, deleteAllFavorite } from "../../redux/favoriteSlice";
 import { styles } from "./styles";
 
 export default function HomeScreen({ navigation, route }) {

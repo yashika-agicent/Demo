@@ -1,13 +1,12 @@
 // screens/GenreScreen.js
 
 import React, { useState } from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View } from "react-native";
 import COLORS from "../../theme/Color";
 import DemoText, {
   DemoTextFontWeight,
   DemoTextSize,
 } from "../../components/CustomText/DemoText";
-import { scale } from "../../theme/Dimension";
 import DemoLine from "../../components/CustomLine/DemoLine";
 import GenreSelection from "./GenreSelection";
 import DemoButton from "../../components/CustomButton/DemoButton";

@@ -1,7 +1,6 @@
 import React from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, View } from "react-native";
 import COLORS from "../../theme/Color";
-import { scale } from "../../theme/Dimension";
 import { ImagePaths } from "../../utils/ImagePaths";
 import DemoText, {
   DemoTextFontWeight,

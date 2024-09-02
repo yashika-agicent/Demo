@@ -1,8 +1,7 @@
 // screens/MovieDetail.js
 
 import React from "react";
-import { Image, Platform, StyleSheet, View } from "react-native";
-import { scale } from "../../theme/Dimension";
+import { Image, View } from "react-native";
 import { ImagePaths } from "../../utils/ImagePaths";
 import DemoText, {
   DemoTextFontWeight,

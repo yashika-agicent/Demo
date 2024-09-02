@@ -1,14 +1,13 @@
 // screens/WelcomeScreen.js
 
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, Image } from "react-native";
 import DemoText, {
   DemoTextFontWeight,
   DemoTextSize,
 } from "../../components/CustomText/DemoText";
 import COLORS from "../../theme/Color";
 import { ImagePaths } from "../../utils/ImagePaths";
-import { scale } from "../../theme/Dimension";
 import DemoTextInput from "../../components/CustomTextInput/DemoTextInput";
 import { useForm } from "react-hook-form";
 import DemoButton from "../../components/CustomButton/DemoButton";
